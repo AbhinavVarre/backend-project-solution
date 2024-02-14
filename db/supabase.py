@@ -1,10 +1,13 @@
+import os
 from supabase import Client, create_client
-from config import api, url
+from dotenv import load_dotenv
 
-api_url: str = url
-key: str = api
+load_dotenv()
+
+api_url: str = os.getenv("url")
+key: str = os.getenv("api")
 
 def create_supabase_client():
-    supabase: Client = create_client(url, key)
+    supabase: Client = create_client(api_url, key)
     return supabase
 
