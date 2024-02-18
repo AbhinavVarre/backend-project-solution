@@ -5,3 +5,7 @@ class User(BaseModel):
     created_at: str
     name: str
     email: str
+
+class CreateUser(BaseModel):
+    name: str
+    email: str
