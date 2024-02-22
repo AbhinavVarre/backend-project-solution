@@ -9,7 +9,7 @@ supabase = create_supabase_client()
 
 
 # example of a query parameter
-@router.get("/", response_model=list[User], summary="get all users")
+@router.get("/", summary="get all users")
 async def get_all_users(limit : int = 10):
     # limit is an example of a a query parameter - we don't declare it in the path.
     # you should give query params default values, unless you're sure you want to require them
@@ -19,18 +19,18 @@ async def get_all_users(limit : int = 10):
     # format that supabase returns is {data: [], ...}
     users_data = supabase.from_("users").select("*").execute()
     # print(users_data)
-    users = [User(**user_data) for user_data in users_data.data]
-    return users
+    # users = [User(**user_data) for user_data in users_data.data]
+    return users_data.data
 
 
 # a sample endpoint with a path parameter
-@router.get("/{user_id}", response_model=list[User], summary="get a user by id")
-async def get_user_by_id(user_id : str):
+@router.get("/{user_id}", summary="get a user by id")
+async def get_user_by_id(user_id : int):
     # format that supabase returns is {data: [], ...}
-    users_data = supabase.from_("users").select("*").eq("id", user_id).execute()
+    users_data = supabase.from_("users").select("*").eq("id", int(user_id)).execute()
     # print(users_data)
-    users = [User(**user_data) for user_data in users_data.data]
-    return users
+    # users = [User(**user_data) for user_data in users_data.data]
+    return users_data.data
 
 # post a user to the database
 # example of a request body
